@@ -523,7 +523,6 @@ footer{background:var(--peach);border-top:1px solid var(--line);padding-block:54
       <p class="eyebrow" id="m-cat"></p>
       <h3 id="m-title"></h3>
       <p id="m-desc" style="color:var(--muted)"></p>
-      <div class="price" style="font-size:.9rem">Starting from<b id="m-price"></b></div>
       <a class="btn btn-wa" id="m-wa" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Enquire on WhatsApp</a>
       <p class="note" style="margin:0">Any design can be changed to your name, age, colours and flavour.</p>
     </div>
@@ -597,7 +596,7 @@ const P = [
 const card = (p,k) => `<article class="card">
   <button class="pic" data-k="${k}" aria-label="View ${p.name}"><img loading="lazy" src="${p.img}" alt="${p.name} by Sani's Bakes"></button>
   <div class="body"><span class="cat-l">${CATS[p.cat].name}</span><h3>${p.name}</h3>
-  <div class="row"><div class="price">from<b>QAR ${p.from}</b></div>
+  <div class="row"><span class="price">Custom made</span>
   <a class="mini-wa" target="_blank" rel="noopener" href="${waLink(`Hello Sani's Bakes, I'm interested in the "${p.name}" (${CATS[p.cat].name}). Please share price and availability.`)}"><svg><use href="#wa"/></svg>Enquire</a></div></div></article>`;
 
 // catalogue
@@ -616,7 +615,7 @@ chips.addEventListener("click", e => { const b=e.target.closest(".chip"); if(!b)
 // home
 document.getElementById("featured").innerHTML = [6,12,24,37,4,15,19,44].map(i=>{const k=P.findIndex(p=>p.img.endsWith("p"+String(i).padStart(2,"0")+".jpg"));return card(P[k],k)}).join("");
 const tileImg = {kids:"p00",birthday:"p06",celebration:"p27",chocolate:"p13",dessert:"p12",sets:"p36"};
-document.getElementById("catTiles").innerHTML = Object.entries(CATS).map(([k,c])=>`<button class="cat" data-cat="${k}"><span class="ph"><img loading="lazy" src="images/${tileImg[k]}.jpg" alt=""></span><b>${c.name}</b><small>from QAR ${c.from}</small></button>`).join("");
+document.getElementById("catTiles").innerHTML = Object.entries(CATS).map(([k,c])=>`<button class="cat" data-cat="${k}"><span class="ph"><img loading="lazy" src="images/${tileImg[k]}.jpg" alt=""></span><b>${c.name}</b><small>${c.desc}</small></button>`).join("");
 document.getElementById("catTiles").addEventListener("click", e => { const b=e.target.closest(".cat"); if(!b) return; filter=b.dataset.cat; renderCatalogue(); location.hash="cakes"; });
 
 // price list
@@ -644,7 +643,6 @@ document.addEventListener("click", e => {
   document.getElementById("m-cat").textContent = CATS[p.cat].name;
   document.getElementById("m-title").textContent = p.name;
   document.getElementById("m-desc").textContent = p.desc;
-  document.getElementById("m-price").textContent = "QAR " + p.from;
   document.getElementById("m-wa").href = waLink(`Hello Sani's Bakes, I'm interested in the "${p.name}". Please share price and availability.`);
   modal.hidden = false; document.getElementById("m-close").focus();
 });
