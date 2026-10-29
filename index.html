@@ -169,6 +169,14 @@ td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 tr:last-child td{border-bottom:0}
 .note{font-size:.88rem;color:var(--muted);margin-top:16px}
 
+.flavours{list-style:none;margin:0;padding:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 34px;background:var(--icing);border-radius:26px}
+.flavours a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;border-radius:12px;text-decoration:none;font-family:var(--display);font-size:1.3rem;font-weight:600;color:var(--mauve);transition:background .2s}
+.flavours a::before{content:"\2756";font-size:.85rem;margin-right:12px;color:var(--mauve)}
+.flavours a span{flex:1}
+.flavours a small{font-family:var(--body);font-size:.75rem;font-weight:500;color:var(--wa);opacity:0;transition:opacity .2s;white-space:nowrap}
+.flavours a:hover,.flavours a:focus-visible{background:var(--paper)}
+.flavours a:hover small,.flavours a:focus-visible small{opacity:1}
+@media (max-width:640px){.flavours{grid-template-columns:1fr;padding:16px}.flavours a small{opacity:1}}
 /* about */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .split .photos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -361,7 +369,9 @@ footer{background:var(--peach);border-top:1px solid var(--line);padding-block:54
     <p class="note" style="text-align:center;margin-top:26px">Add-on prices depend on design complexity. Delivery charges depend on location and are confirmed with your order.</p>
   </div>
   <div class="wrap" style="padding-bottom:80px">
-    <div class="steps" style="margin-top:20px">
+    <div class="sec-head" style="margin-top:10px"><div><p class="eyebrow">Flavour menu</p><h2>Choose your flavour</h2></div><p>Tap any flavour to order it on WhatsApp.</p></div>
+    <ul class="flavours" id="flavours"></ul>
+    <div class="steps" style="margin-top:56px">
       <div class="step"><h3>Send your idea</h3><p>Pick a catalogue design or share a picture.</p></div>
       <div class="step"><h3>Get a quote</h3><p>QAR 150 standard plus any extra customisation.</p></div>
       <div class="step"><h3>Book your date</h3><p>A 50% advance confirms your order.</p></div>
@@ -631,6 +641,8 @@ const rows = [
 ];
 document.getElementById("priceRows").innerHTML = rows.map((r,i)=>`<tr><td>${r[0]}</td><td class="n">${i?'<span style="color:var(--mauve)">+ quoted</span>':'<b>'+r[1]+'</b>'}</td></tr>`).join("");
 
+const FLAVOURS=["Chocolate Cream Cake","Chocolate Ganache Cake","Chocolate Truffle Cake","Chocolate Nutty Cake","Chocolate Mousse Cake","Pistachio Ganache Cake","Pistachio Cheesecake","Butterscotch Cake","Vanilla Cake","Vanilla Pineapple Cake","Vanilla Custard Cake","Vancho Cake","Lotus Biscoff Cake","Cappuccino Cake","Caramel Cake","Tender Coconut Cake","Honey Cake","Red Velvet Cake","Strawberry Cake","Strawberry Cheesecake","Rafello Cake","Ferrero Rocher Cake","Mango Cake","Mango Mousse Cake","Brownies","Kulfi Cake","Carrot Cake","Spanish Delight Cake","Tiramisu","Belgium Chocolate Cake (Premium)"];
+document.getElementById("flavours").innerHTML=FLAVOURS.map(f=>`<li><a target="_blank" rel="noopener" href="${waLink(`Hello Sani's Bakes, I'd like to order a ${f}. Please share details.`)}"><span>${f}</span><small>Order on WhatsApp</small></a></li>`).join("");
 // WhatsApp links
 document.querySelectorAll("[data-wa]").forEach(a=>a.href=waLink(a.dataset.wa));
 
